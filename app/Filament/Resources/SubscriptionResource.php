@@ -24,7 +24,7 @@ class SubscriptionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $user = Auth::user()->role;
+        $user = Auth::user();
 
         if ($user === 'admin'){
             return parent::getEloquentQuery();
@@ -60,7 +60,7 @@ class SubscriptionResource extends Resource
                             ->label('Bukti Transger ke Rekening 007701138141505 (BRI) A/N Moreno Sebesar Rp. 50.000')
                             ->required()
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('status')
+                        Forms\Components\Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
                                 'success' => 'Success',

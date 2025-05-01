@@ -26,7 +26,7 @@ class ProductResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $user = Auth::user()->role;
+        $user = Auth::user();
 
         if ($user === 'admin'){
             return parent::getEloquentQuery();
