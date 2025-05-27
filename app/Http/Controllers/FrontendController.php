@@ -11,7 +11,7 @@ class FrontendController extends Controller
     public function index(Request $request) {
         $store = User::where('username', $request->username)->first();
 
-        if ($store){
+        if (!$store){
             abort(404);
         }
 

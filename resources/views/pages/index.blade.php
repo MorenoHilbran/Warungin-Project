@@ -13,7 +13,7 @@
                 </div>
                 <a href="#"
                     class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white bg-opacity-20">
-                    <img src="assets/images/icons/ic_bell.svg" class="w-[28px] h-[28px]" alt="icon">
+                    <img src="{{ asset('assets/images/icons/ic_bell.svg') }}" class="w-[28px] h-[28px]" alt="icon">
                 </a>
             </div>
 
@@ -22,7 +22,7 @@
             <div class="absolute bottom-0 left-0 right-0 w-full gap-2 px-5">
                 <label
                     class="flex items-center w-full rounded-full p-[8px_8px] gap-3 bg-white ring-1 ring-[#F1F2F6] focus-within:ring-[#F3AF00] transition-all duration-300">
-                    <img src="assets/images/icons/ic_search.svg" class="w-8 h-8 flex shrink-0" alt="icon">
+                    <img src="{{asset('assets/images/icons/ic_search.svg')}}" class="w-8 h-8 flex shrink-0" alt="icon">
                     <input type="text" name="search" id=""
                         class="appearance-none outline-none w-full font-semibold placeholder:text-ngekos-grey placeholder:font-light"
                         placeholder="Search menu, or etc...">
@@ -33,7 +33,7 @@
         <div id="Categories" class="relative flex flex-col px-5 mt-[20px]">
             <div class="flex items-end justify-between ">
                 <h1 class="text-[#353535] font-[500] text-lg">Explore Categories</h1>
-                <a href="{{ route('product.find-results', $store->username) . '?category=' . $category->slug }}" class="text-[#FF801A] text-sm ">See All</a>
+                <a href="#" class="text-[#FF801A] text-sm ">See All</a>
             </div>
 
             <div class="swiper w-full">
@@ -51,18 +51,7 @@
                             </div>
                         </div>
                     </a>
-
-                        <div class="flex flex-col items-center shrink-0 gap-2 text-center">
-                            <div
-                                class="w-[64px] h-[64px] rounded-full flex shrink-0 overflow-hidden p-4 bg-[#9393931A] bg-opacity-10">
-                                <img src="assets/images/icons/chicken.png" class="w-full h-full object-contain"
-                                    alt="thumbnail">
-                            </div>
-                            <div class="flex flex-col gap-[2px]">
-                                <h3 class="font-light text-[#504D53] text-[14px]">Chicken</h3>
-                            </div>
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -75,7 +64,6 @@
 
             <div class="swiper w-full">
                 <div class="swiper-wrapper mt-[10px]">
-                    
                     @foreach ($populars as $popular)
                     <div class="swiper-slide !w-fit">
                         <a href="{{ route('product.show', ['username'=>$store->username, 'id'=> $popular->id]) }}" class="card">
@@ -118,6 +106,7 @@
                                 </div>
                             </div>
                         </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -129,6 +118,7 @@
                 <a href="#" class="text-[#FF801A] text-sm ">See All</a>
             </div>
             <div class="flex flex-col gap-4 mt-[10px]">
+                @foreach ($products as $product )
                 <a href="{{ route('product.show', ['username'=>$store->username, 'id'=> $product->id]) }}" class="card">
                     <div
                         class="flex rounded-[8px] border border-[#F1F2F6] p-[12px] gap-4 bg-white hover:bg-[#FFF7F0] hover:border-[1px] hover:border-[#F3AF00] transition-all duration-300">
@@ -152,18 +142,16 @@
                                 <button type="button"
                                     class="flex items-center justify-center w-[24px] h-[24px] rounded-full bg-transparent"
                                     data-id="{{ $product->id }}" onclick="addToCart(this.dataset.id)">
-                                    <img src="assets/images/icons/ic_plus.svg" class="w-full h-full" alt="icon">
+                                    <img src="{{ asset('assets/images/icons/ic_plus.svg') }}" class="w-full h-full" alt="icon">
                                 </button>
                             </div>
                         </div>
                     </div>
                 </a>
-
-                @foreach ($products as $product )
-                
                 @endforeach
             </div>
         </div>
+    </div>
 
-        @include('includes.navigation')
+    @include('includes.navigation')
 @endsection
