@@ -60,7 +60,7 @@ class ProductCategoryResource extends Resource
                     ->hidden(fn()=> Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Kategori'),
-                Tables\Columns\ImageColumn::make('Icon')
+                Tables\Columns\ImageColumn::make('icon')
                     ->label('Ikon Kategori')
             ])
             ->filters([

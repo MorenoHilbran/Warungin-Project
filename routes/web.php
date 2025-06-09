@@ -5,6 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/{username}', [FrontendController::class, 'index']) ->name('index');
 
 Route::get('/{username}/find-product', [ProductController::class, 'find'])->name('product.find');

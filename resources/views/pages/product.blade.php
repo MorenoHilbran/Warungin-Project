@@ -4,7 +4,7 @@
             class="absolute top-0 left-0 right-0 flex items-center justify-between w-full px-5 py-3 z-10 bg-gradient-to-b from-black/80 to-transparent">
             <a href="{{route('index', $store->username)}}"
                 class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white/10">
-                <img src="{{asset('assets/images/icons/Arrow = Left.svg')}}" class="w-8 h-8" alt="icon">
+                <img src="{{ asset('assets/images/icons/ArrowLeft.svg') }}" class="w-8 h-8" alt="icon">
             </a>
             <p class="font-semibold text-white">Details</p>
             <button
@@ -38,7 +38,7 @@
                 <div class="grid grid-cols-2 gap-3">
                 @foreach ($product->productIngredients as $ingredient)
                     <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
+                        <img src="{{ asset('assets/images/icons/ic_check.svg') }}" alt="icon" class="w-5 h-5">
                         <span class="text-sm text-gray-600">{{ $ingredient->name }}</span>
                     </div>
                   @endforeach
@@ -150,8 +150,8 @@
                     </p>
                 </div>
 
-                <button type="button"
-                    class="flex justify-center rounded-full p-[14px_28px] bg-[#FF801A] font-normal text-white"
+                <button type="button "
+                    class="flex justify-center cursor-pointer rounded-full p-[14px_28px] bg-[#FF801A] font-normal text-white"
                     data-id="{{ $product->id }}" onclick="addToCart(this.dataset.id)">
                     Add To Cart
                 </button>

@@ -27,6 +27,7 @@
                         <img src="{{ asset('storage/' . $product->image) }}"
                             class="w-full h-full object-cover rounded-[8px]" alt="icon">
                     </div>
+                    <a href="{{ route('product.show', ['username'=>$store->username, 'id'=> $product->id]) }}" class="card">
                     <div class="flex flex-col gap-1 w-full">
                         <p class="text-[#F3AF00] font-[400] text-[12px]">
                             {{ $product->productCategory->name }}
@@ -45,10 +46,11 @@
                             <button type="button"
                                     class="flex items-center justify-center w-[24px] h-[24px] rounded-full bg-transparent"
                                     data-id="{{ $product->id }}" onclick="addToCart(this.dataset.id)">
-                                    <img src="assets/images/icons/ic_plus.svg" class="w-full h-full" alt="icon">
+                                    <img src="{{ asset('assets/images/icons/ic_plus.svg') }}" class="w-full h-full" alt="icon">
                                 </button>
                         </div>
                     </div>
+                    </a>
                 </div>
             </a>
             @endforeach

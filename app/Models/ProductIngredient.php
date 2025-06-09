@@ -12,6 +12,7 @@ class ProductIngredient extends Model
     protected $fillable = [
         'product_id',
         'name',
+        'icon',
     ];
 
     public function product()

@@ -9,21 +9,24 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function cart(Request $request)
+ public function cart(Request $request)
     {
         $store = User::where('username', $request->username)->first();
 
-        if ($store){
+        if (!$store) {
             abort(404);
         }
 
-        return view('pages.cart', compact('store'));
+        // Fetch products associated with the store
+        $products = $store->products; // Assuming User model has a 'products' relationship
+
+        return view('pages.cart', compact('store', 'products'));
     }
     public function customerInformation(Request $request)
     {
         $store = User::where('username', $request->username)->first();
 
-        if ($store){
+        if (!$store){
             abort(404);
         }
 
@@ -34,7 +37,7 @@ class TransactionController extends Controller
     {
         $store = User::where('username', $request->username)->first();
 
-        if ($store){
+        if (!$store){
             abort(404);
         }
 
@@ -42,7 +45,7 @@ class TransactionController extends Controller
 
         $totalPrice = 0;
 
-        foreach($carts as $cart){
+        foreach ($carts as $cart) {
             $product = Product::where('id', $cart['id'])->first();
             $totalPrice += $product->price * $cart['qty'];
         }
@@ -54,21 +57,24 @@ class TransactionController extends Controller
             'table_number' => $request->table_number,
             'payment_method' => $request->payment_method,
             'total_price' => $totalPrice,
-            'status' => 'pending'
+            'status' => 'pending',
         ]);
 
-        foreach ($carts as $cart){
+        foreach ($carts as $cart) {
             $product = Product::where('id', $cart['id'])->first();
 
             $transaction->transactionDetails()->create([
                 'product_id' => $product->id,
-                'qty' => $cart['qty'],
-                'note' => $cart['note'],
+                'quantity' => $cart['qty'],
+                'note' => $cart['note'] ?? '',
             ]);
         }
 
-        if($request->payment_method == 'cash'){
-            return redirect()->route('success', ['username'=>$store->username, 'order_id'=>$transaction->code]);
+        if ($request->payment_method == 'cash') {
+            return redirect()->route('success', [
+                'username' => $store->username,
+                'order_id' => $transaction->code,
+            ]);
         } else {
             \Midtrans\Config::$serverKey = config('midtrans.serverKey');
             \Midtrans\Config::$isProduction = config('midtrans.isProduction');
@@ -83,8 +89,9 @@ class TransactionController extends Controller
                 'customer_details' => [
                     'name' => $request->name,
                     'phone' => $request->phone_number,
-                ],   
+                ],
             ];
+
             $paymentUrl = \Midtrans\Snap::createTransaction($params)->redirect_url;
 
             return redirect($paymentUrl);
@@ -96,7 +103,7 @@ class TransactionController extends Controller
         $transaction = Transaction::where('code', $request->order_id)->first();
         $store = User::where('username', $request->username)->first();
 
-        if ($store){
+        if (!$store){
             abort(404);
         }
 

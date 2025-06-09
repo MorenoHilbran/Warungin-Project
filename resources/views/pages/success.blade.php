@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-
+                @endforeach
                     <div class="flex flex-col gap-2">
                         <p class="font-semibold">Your Code Order</p>
                         <label

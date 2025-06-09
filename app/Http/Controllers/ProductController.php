@@ -9,35 +9,35 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function find(Request $request){
+    public function find(Request $request)
+    {
         $store = User::where('username', $request->username)->first();
-
-        if ($store){
+        if (!$store) { // Fixed: Abort if store is not found
             abort(404);
         }
         return view('pages.find', compact('store'));
-
     }
 
-    public function findResult(Request $request){
+    public function findResults(Request $request)
+    {
         $store = User::where('username', $request->username)->first();
-
-        if ($store){
+        if (!$store) { // Fixed: Abort if store is not found
             abort(404);
         }
 
         $products = Product::where('user_id', $store->id);
 
-        if(isset($request->category)){
+        if (isset($request->category)) {
             $category = ProductCategory::where('user_id', $store->id)
                 ->where('slug', $request->category)
                 ->first();
-
-            $products = $products->where('product_category_id', $category->id);
+            if ($category) {
+                $products = $products->where('product_category_id', $category->id);
+            }
         }
 
-        if(isset($request->search)){
-            $products = $products->where('name', 'like', '%'.$request->search.'%');
+        if (isset($request->search)) {
+            $products = $products->where('name', 'like', '%' . $request->search . '%');
         }
 
         $products = $products->get();
@@ -45,17 +45,19 @@ class ProductController extends Controller
         return view('pages.result', compact('store', 'products'));
     }
 
-    public function show(Request $request)
+    public function show($username, $id)
     {
-        $store = User::where('username', $request->username)->first();
-
-        if ($store){
+        $store = User::where('username', $username)->first();
+        if (!$store) { // Fixed: Abort if store is not found
             abort(404);
         }
 
-        $product = Product::where('id', $request->id)->first();
+        $product = Product::where('id', $id)
+                         ->where('user_id', $store->id) // Ensure product belongs to store
+                         ->with(['productCategory', 'productIngredients'])
+                         ->first();
 
-        if(!$product){
+        if (!$product) {
             abort(404);
         }
 

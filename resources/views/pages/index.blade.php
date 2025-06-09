@@ -12,12 +12,12 @@
                     <h1 class="text-white font-semibold">{{ $store->name }}</h1>
                 </div>
                 <a href="#"
-                    class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white bg-opacity-20">
+                    class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden  bg-opacity-20">
                     <img src="{{ asset('assets/images/icons/ic_bell.svg') }}" class="w-[28px] h-[28px]" alt="icon">
                 </a>
             </div>
 
-            <h1 class="text-white font-[600] text-2xl leading-[30px] mt-[20px]">Order Delicious Meal!</h1>
+            <h1 class="text-white font-[600] text-2xl leading-[30px] mt-[20px]">Pesan Produk Kami Sekarang!</h1>
 
             <div class="absolute bottom-0 left-0 right-0 w-full gap-2 px-5">
                 <label

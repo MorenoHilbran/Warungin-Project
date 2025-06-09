@@ -24,16 +24,6 @@ class Transaction extends Model
     {
         parent::boot();
 
-        static::creating(function ($model){
-            if(Auth::user()->role === 'store'){
-                $model->user_id = Auth::user()->id;
-            }
-        });
-        static::updating(function ($model){
-            if(Auth::user()->role === 'store'){
-                $model->user_id = Auth::user()->id;
-            }
-        });
     }
 
     public function user()

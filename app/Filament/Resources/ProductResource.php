@@ -106,14 +106,15 @@ class ProductResource extends Resource
                     ->label('Popular Menu')
                     ->required(),
                 Forms\Components\Repeater::make('productIngredients')
-                    ->label('Bahan Baku Menu')
-                    ->relationship('productIngredients')
-                    ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nama Bahan')
+                ->label('Bahan Baku Menu')
+                ->relationship('productIngredients')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nama Bahan')
                         ->required(),
-                    ])->columnSpanFull(),
-            ]);
+                ])
+                ->columnSpanFull(),
+                ]);
     }
 
     public static function table(Table $table): Table
@@ -137,7 +138,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('rating')
                     ->label('Rating Menu'),
                 Tables\Columns\ToggleColumn::make('is_popular')
-                    ->label('Rating Menu'),
+                    ->label('Favorit'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')

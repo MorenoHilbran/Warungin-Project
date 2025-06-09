@@ -7,24 +7,24 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Auth\Register as BaseRegister;
 
-
 class Register extends BaseRegister
 {
-    protected function getForms():array{
+    protected function getForms(): array
+    {
         return [
             'form' => $this->form(
                 $this->makeForm()
-                ->schema([
-                    $this->getLogoFormComponent(),
-                    $this->getNameFormComponent(),
-                    $this->getUsernameFormComponent(),
-                    $this->getEmailFormComponent(),
-                    $this->getPasswordFormComponent(),
-                    $this->getPasswordConfirmFormComponent(),
-                ])
-                ->statePath('data'),
-                ),
-            ];
+                    ->schema([
+                        $this->getLogoFormComponent(),
+                        $this->getNameFormComponent(),
+                        $this->getUsernameFormComponent(),
+                        $this->getEmailFormComponent(),
+                        $this->getPasswordFormComponent(),
+                        $this->getPasswordConfirmationComponent(), // diperbaiki
+                    ])
+                    ->statePath('data'),
+            ),
+        ];
     }
 
     protected function getLogoFormComponent(): Component
@@ -43,5 +43,14 @@ class Register extends BaseRegister
             ->required()
             ->minLength(5)
             ->unique($this->getUserModel());
+    }
+
+    protected function getPasswordConfirmationComponent(): Component
+    {
+        return TextInput::make('passwordConfirmation')
+            ->label('Konfirmasi Password')
+            ->password()
+            ->required()
+            ->same('password');
     }
 }

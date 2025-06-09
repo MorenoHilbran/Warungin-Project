@@ -16,7 +16,7 @@
                         <p class="font-semibold">Name</p>
                         <label
                             class="flex items-center w-full rounded-[8px] p-[14px_20px] gap-3 bg-white ring-1 ring-[#F3AF003D] ring-opacity-5 focus-within:ring-[#F3AF00] focus-within:ring-opacity-100 transition-all duration-300">
-                            <img src="assets/images/icons/Document.svg" class="w-5 h-5 flex shrink-0" alt="icon">
+                            <img src="{{ asset('assets/images/icons/Document.svg') }}" class="w-5 h-5 shrink-0" alt="icon">
                             <input type="text" name="search" id=""
                                 class="appearance-none outline-none w-full font-regular placeholder:text-ngekos-grey placeholder:font-light"
                                 placeholder="Type the menu name...">

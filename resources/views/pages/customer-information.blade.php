@@ -11,7 +11,7 @@
         </div>
 
         <div id="Cart" class="flex flex-col gap-4 mt-[10px] px-5">
-            @foreach ($store->$products as $product)
+            @foreach ($store->products as $product)
             <div class="cart-item flex gap-4 flex-col rounded-[8px] border border-[#F1F2F6] p-[12px]  bg-white hover:bg-[#FFF7F0] hover:border-[1px] hover:border-[#F3AF00] transition-all duration-300"
                 data-id="{{ $product->id }}">
                 <div class="flex gap-4">
@@ -45,7 +45,7 @@
                 </div>
                 <label
                     class="flex items-center w-full rounded-[8px] p-[8px] gap-3 bg-white ring-1 ring-[#F3AF003D] ring-opacity-5 focus-within:ring-[#F3AF00] focus-within:ring-opacity-100 transition-all duration-300">
-                    <img src="assets/images/icons/Edit.svg" class="w-5 h-5 flex shrink-0" alt="icon">
+                    <img src="{{ asset('assets/images/icons/Edit.svg') }}" class="w-5 h-5 flex shrink-0" alt="icon">
                     <input type="text" name="notes" id="notes" data-id="{{ $product->id }}"
                         class="appearance-none outline-none w-full font-regular placeholder:text-ngekos-grey placeholder:font-normal"
                         placeholder="Write notes..." readonly> 
@@ -131,7 +131,7 @@
                     </div>
 
                     <button type="submit"
-                        class="flex justify-center rounded-full p-[14px_28px] bg-[#FF801A] font-normal text-white">
+                        class="flex justify-center cursor-pointer rounded-full p-[14px_28px] bg-[#FF801A] font-normal text-white">
                         Payment
                     </button>
                 </div>
