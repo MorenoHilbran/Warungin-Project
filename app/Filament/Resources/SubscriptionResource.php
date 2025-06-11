@@ -20,21 +20,24 @@ class SubscriptionResource extends Resource
 {
     protected static ?string $model = Subscription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
 
-        if ($user === 'admin'){
+        // === PERBAIKAN: Memeriksa role pengguna dengan benar ===
+        if ($user->role === 'admin') {
             return parent::getEloquentQuery();
         }
+        // =======================================================
+
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
     public static function canEdit(Model $record): bool
     {
-
+        // Fungsi ini sudah benar, hanya admin yang bisa mengedit.
         if (Auth::user()->role === 'admin') {
             return true;
         }
@@ -57,7 +60,8 @@ class SubscriptionResource extends Resource
                     ->relationship()
                     ->schema([
                         Forms\Components\FileUpload::make('proof')
-                            ->label('Bukti Transger ke Rekening 007701138141505 (BRI) A/N Moreno Sebesar Rp. 50.000')
+                            ->label('Bukti Transfer ke Rekening 007701138141505 (BRI) A/N Moreno Sebesar Rp. 50.000')
+                            ->image()
                             ->required()
                             ->columnSpanFull(),
                         Forms\Components\Select::make('status')
@@ -93,6 +97,12 @@ class SubscriptionResource extends Resource
                     ->label('Bukti Pembayaran'),
                 Tables\Columns\TextColumn::make('subscriptionPayment.status')
                     ->label('Status Pembayaran')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'success' => 'success',
+                        'failed' => 'danger',
+                    }),
             ])
             ->filters([
                 //

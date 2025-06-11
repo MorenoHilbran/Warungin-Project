@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/{username}', [FrontendController::class, 'index']) ->name('index');
+Route::get('{username}/profile', [FrontendController::class, 'profile'])->name('profile');
 
 Route::get('/{username}/find-product', [ProductController::class, 'find'])->name('product.find');
 Route::get('/{username}/find-product/result', [ProductController::class, 'findResults'])->name('product.find-results');

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 
 class FrontendController extends Controller
 {
@@ -40,5 +42,13 @@ class FrontendController extends Controller
         Log::info("Store: {$store->name}, Populars count: {$populars->count()}, Products count: {$products->count()}");
 
         return view('pages.index', compact('store', 'populars', 'products'));
+    }
+    public function profile(Request $request)
+    {
+        $store = User::where('username', $request->username)->first();
+        if (!$store) {
+            abort(404);
+        }
+        return view('pages.profile', compact('store'));
     }
 }

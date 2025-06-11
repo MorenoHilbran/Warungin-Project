@@ -7,7 +7,7 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Subscription;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get; // Import 'Get'
 
 class ProductResource extends Resource
 {
@@ -28,9 +29,11 @@ class ProductResource extends Resource
     {
         $user = Auth::user();
 
-        if ($user === 'admin'){
+        // === PERBAIKAN 1: Memeriksa role pengguna dengan benar ===
+        if ($user->role === 'admin') {
             return parent::getEloquentQuery();
         }
+        
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
@@ -41,14 +44,20 @@ class ProductResource extends Resource
         }
 
         $subscription = Subscription::where('user_id', Auth::user()->id)
-            ->where('end_date', '>' , now())
+            ->where('end_date', '>', now())
             ->where('is_active', true)
             ->latest()
             ->first();
         
-            $countProduct = Product::where('user_id', Auth::user()->id)->count();
+        $countProduct = Product::where('user_id', Auth::user()->id)->count();
 
-            return ! ($countProduct >= 5 && !$subscription);
+        // Jika punya langganan, bisa buat produk tanpa batas.
+        if ($subscription) {
+            return true;
+        }
+
+        // Jika tidak punya langganan, hanya bisa buat maksimal 5 produk.
+        return $countProduct < 5;
     }
 
     public static function form(Form $form): Form
@@ -58,32 +67,32 @@ class ProductResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->label('Toko')
                     ->relationship('user', 'name')
+                    ->searchable()
                     ->required()
-                    ->reactive()
-                    ->hidden(fn()=> Auth::user()->role === 'store'),
+                    ->reactive() // Dibuat reactive agar kategori produk bisa menyesuaikan
+                    ->hidden(fn() => Auth::user()->role === 'store'),
+                
+                // === PERBAIKAN 2: Menggabungkan dua field kategori produk menjadi satu ===
                 Forms\Components\Select::make('product_category_id')
                     ->label('Kategori Produk')
                     ->required()
-                    ->relationship('productCategory','name')
-                    ->disabled(fn (callable $get) => $get('user_id') === null)
-                    ->options(function(callable $get){
-                        $userId = $get('user_id');
-                        if (!$userId){
-                            return [];
+                    ->options(function (Get $get) {
+                        $user = Auth::user();
+                        if ($user->role === 'admin') {
+                            // Admin: ambil kategori berdasarkan toko yang dipilih
+                            $userId = $get('user_id');
+                            if (!$userId) {
+                                return []; // Kosongkan jika belum ada toko yang dipilih
+                            }
+                            return ProductCategory::where('user_id', $userId)->pluck('name', 'id');
+                        } else {
+                            // Store: ambil kategori milik toko itu sendiri
+                            return ProductCategory::where('user_id', $user->id)->pluck('name', 'id');
                         }
-                        return ProductCategory::where('user_id', Auth::user()->id)
-                        ->pluck('name', 'id');
                     })
-                    ->hidden(fn()=> Auth::user()->role === 'store'),
-                Forms\Components\Select::make('product_category_id')
-                    ->label('Kategori Produk')
-                    ->required()
-                    ->relationship('productCategory','name')
-                    ->options(function(callable $get){
-                        return ProductCategory::where('user_id', Auth::user()->id)
-                        ->pluck('name', 'id');
-                    })
-                    ->hidden(fn()=> Auth::user()->role === 'admin'),
+                    // Nonaktifkan jika admin belum memilih toko
+                    ->disabled(fn (Get $get): bool => Auth::user()->role === 'admin' && !$get('user_id')),
+
                 Forms\Components\FileUpload::make('image')
                     ->label('Foto Menu')
                     ->image()
@@ -97,24 +106,27 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->label('Harga Menu')
                     ->numeric()
+                    ->prefix('Rp')
                     ->required(),
                 Forms\Components\TextInput::make('rating')
                     ->label('Rating Menu')
                     ->numeric()
+                    ->minValue(0)
+                    ->maxValue(5)
                     ->required(),
                 Forms\Components\Toggle::make('is_popular')
                     ->label('Popular Menu')
                     ->required(),
                 Forms\Components\Repeater::make('productIngredients')
-                ->label('Bahan Baku Menu')
-                ->relationship('productIngredients')
-                ->schema([
-                    Forms\Components\TextInput::make('name')
-                        ->label('Nama Bahan')
-                        ->required(),
-                ])
-                ->columnSpanFull(),
-                ]);
+                    ->label('Bahan Baku Menu')
+                    ->relationship()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Bahan')
+                            ->required(),
+                    ])
+                    ->columnSpanFull(),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -123,37 +135,39 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Toko')
-                    ->hidden(fn()=> Auth::user()->role === 'store'),
+                    ->searchable()
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('productCategory.name')
-                    ->label('Kategori Menu'),
+                    ->label('Kategori Menu')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama Menu'),
+                    ->label('Nama Menu')
+                    ->searchable(),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Foto Menu'),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Harga Menu')
-                    ->formatStateUsing(function (string $state){
-                        return 'Rp ' . number_format($state);
-                    }),
+                    ->money('IDR'),
                 Tables\Columns\TextColumn::make('rating')
-                    ->label('Rating Menu'),
+                    ->label('Rating Menu')
+                    ->numeric(),
                 Tables\Columns\ToggleColumn::make('is_popular')
                     ->label('Favorit'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')
-                ->relationship('user', 'name')
-                ->label('Toko')
-                ->hidden(fn()=> Auth::user()->role === 'store'),
+                    ->relationship('user', 'name')
+                    ->label('Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
+                // Filter Kategori juga perlu diperbaiki
                 Tables\Filters\SelectFilter::make('product_category_id')
-                ->options(function(){
-                    if (Auth::user()->role === 'admin'){
-                        return ProductCategory::pluck('name', 'id');
-                    }
-                    return ProductCategory::where('user_id', Auth::user()->id)
-                    ->pluck('name', 'id');
-                })
-                ->hidden(fn()=> Auth::user()->role === 'store'),
+                    ->label('Kategori Produk')
+                    ->options(function () {
+                        if (Auth::user()->role === 'admin') {
+                            return ProductCategory::pluck('name', 'id');
+                        }
+                        return ProductCategory::where('user_id', Auth::user()->id)->pluck('name', 'id');
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

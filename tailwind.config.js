@@ -15,7 +15,11 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+       extend: {
+      backgroundImage: {
+        'hero-gradient': 'radial-gradient(circle at top left, #ff9a8b, #ff6a88, #ff99ac)',
+      },
+    },
   },
   plugins: [],
 }

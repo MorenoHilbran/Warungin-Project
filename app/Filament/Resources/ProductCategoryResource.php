@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductCategoryResource\Pages;
 use App\Filament\Resources\ProductCategoryResource\RelationManagers;
 use App\Models\ProductCategory;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,11 +28,15 @@ class ProductCategoryResource extends Resource
     {
         $user = Auth::user();
 
-        if ($user === 'admin'){
+        // === PERBAIKAN: Memeriksa role pengguna dengan benar ===
+        if ($user->role === 'admin') {
             return parent::getEloquentQuery();
         }
+        // =======================================================
+        
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -47,6 +51,7 @@ class ProductCategoryResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('icon')
                     ->label('Ikon Kategori')
+                    ->image() // Menambahkan validasi gambar
                     ->required(),
             ]);
     }
@@ -57,9 +62,13 @@ class ProductCategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Toko')
+                    ->searchable()
+                    ->sortable()
                     ->hidden(fn()=> Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama Kategori'),
+                    ->label('Nama Kategori')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('icon')
                     ->label('Ikon Kategori')
             ])

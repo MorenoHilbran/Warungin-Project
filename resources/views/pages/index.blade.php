@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="Background"
-            class="absolute top-0 w-full h-[170px] rounded-b-[45px] bg-[linear-gradient(90deg,#FF923C_0%,#FF801A_100%)]">
+<div id="Background" class="absolute top-0 w-full h-[170px] rounded-b-[45px] bg-[linear-gradient(90deg,#FF923C_0%,#FF801A_100%)]">
         </div>
 
         <div id="TopNav" class="relative flex flex-col px-5 mt-[20px] h-[170px]">

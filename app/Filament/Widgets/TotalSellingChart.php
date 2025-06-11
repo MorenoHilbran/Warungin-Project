@@ -7,9 +7,11 @@ use App\Models\TransactionDetail;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
-class BestSellingChart extends ChartWidget
+class TotalSellingChart extends ChartWidget
 {
     protected static ?string $heading = 'Grafik Produk Terlaris';
+
+    protected static ?int $sort = 4;
 
     protected function getData(): array
     {
@@ -22,7 +24,7 @@ class BestSellingChart extends ChartWidget
         $products = $details->groupBy('product_id')
             ->map(function ($items) {
                 return $items->sum('quantity');
-            })->sortDesc()->take(5); // Ambil 5 produk terlaris
+            })->sortDesc()->take(5); 
 
         $labels = [];
         $data = [];
@@ -40,7 +42,7 @@ class BestSellingChart extends ChartWidget
                 [
                     'label' => 'Jumlah Terjual',
                     'data' => $data,
-                    'backgroundColor' => '#3b82f6', // Biru
+                    'backgroundColor' => 'bg-primary-600', 
                 ],
             ],
             'labels' => $labels,
@@ -49,6 +51,12 @@ class BestSellingChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar'; // Bisa diganti dengan 'pie', 'line', dll.
+        return 'bar'; 
+    }
+    
+     public static function canView(): bool
+    {
+        return Auth::user()?->role === 'store';
     }
 }
+

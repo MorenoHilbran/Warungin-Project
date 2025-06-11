@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Warungin - Landing Page</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-sans bg-gray-100">
@@ -74,15 +76,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
 <!-- Hero Section -->
-<section class="relative min-h-screen bg-[#FF8626] text-white overflow-hidden flex items-center" id="home">
-  <!-- Background Pattern SVG garis diagonal -->
-  <svg class="absolute inset-0 w-full h-full z-0 opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="diagonalLines" patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
-        <line x1="0" y="0" x2="0" y2="20" stroke="white" stroke-width="1" />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#diagonalLines)" />
+<section class="relative min-h-screen text-white overflow-hidden flex items-center"
+         style="background: radial-gradient(circle at top left, #ffb347, #ff8626, #ff5e3a);"
+         id="home">
+
+  <!-- Background Bubbles (5 besar, transparansi berbeda) -->
+  <svg class="absolute inset-0 w-full h-full z-0 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bubble 1 - jelas -->
+    <circle cx="15%" cy="25%" r="200" fill="white" opacity="0.08" />
+    <!-- Bubble 2 - samar -->
+    <circle cx="65%" cy="30%" r="250" fill="white" opacity="0.04" />
+    <!-- Bubble 3 - jelas -->
+    <circle cx="40%" cy="70%" r="180" fill="white" opacity="0.07" />
+    <!-- Bubble 4 - sangat samar -->
+    <circle cx="80%" cy="80%" r="220" fill="white" opacity="0.03" />
+    <!-- Bubble 5 - sedang -->
+    <circle cx="30%" cy="90%" r="150" fill="white" opacity="0.05" />
   </svg>
 
   <!-- Konten Utama -->
@@ -134,34 +143,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-<!-- About Warungin -->
-<section class="bg-white py-16" id="about">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <h2 class="text-2xl font-bold mb-2">What is <span class="text-[#FF8626]">Warungin?</span></h2>
-    <p class="text-gray-600 mb-10">
+
+
+
+<!-- About Warungin Section -->
+<section class="relative bg-white py-24 overflow-hidden" id="about">
+  <!-- Background Bubbles -->
+  <div class="absolute inset-0 -z-10">
+    <!-- Bubble dekoratif -->
+  </div>
+
+  <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-gray-800" data-aos="fade-up">
+      What is <span class="text-[#FF8626]">Warungin?</span>
+    </h2>
+    <p class="text-gray-600 text-lg mb-12 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
       Warungin adalah platform digital yang dirancang untuk membantu pelaku UMKM dan pedagang lokal dalam memasarkan produk mereka secara online.
       Dengan Warungin, pengguna dapat membuat etalase toko, mengelola stok barang, menerima pesanan, serta melakukan pembayaran secara digital,
-      sehingga mempermudah proses jual beli dan memperluas jangkauan pasar UMKM.
-    </p>
+      sehingga mempermudah proses jual beli dan memperluas jangkauan pasar UMKM.    </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Card UMKM -->
-      <div class="bg-[#FFEFDE] rounded-xl p-6 text-left shadow-md hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold mb-2">Buat UMKM Online Store</h3>
-        <p class="text-gray-700 mb-4">Daftarkan Toko kamu ke Warungin untuk membuat online store</p>
-        <a href="#" class="inline-block px-4 py-2 bg-[#FF8626] text-white rounded hover:bg-[#e76e13] transition">Buka Sekarang</a>
+      <div 
+        class="bg-white border border-orange-200 rounded-2xl p-6 text-left shadow-lg transform transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
+        data-aos="fade-up" data-aos-delay="200">
+        <h3 class="text-xl font-semibold text-[#FF8626] mb-2">Buat UMKM Online Store</h3>
+        <p class="text-gray-700 mb-4">Daftarkan Toko kamu ke Warungin...</p>
+        <a href="#" class="inline-block px-5 py-2.5 bg-[#FF8626] text-white rounded-lg shadow hover:bg-[#e76e13] transition-all duration-300">Buka Sekarang</a>
       </div>
+
       <!-- Card Pelanggan -->
-      <div class="bg-[#FFF6ED] rounded-xl p-6 text-left shadow-md hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold mb-2">Kunjungi Situs UMKM</h3>
-        <p class="text-gray-700 mb-4">Cari UMKM favoritmu di Platform Warungin dan beli produknya!</p>
-        <a href="#" class="inline-block px-4 py-2 bg-[#FF8626] text-white rounded hover:bg-[#e76e13] transition">Cari UMKM</a>
+      <div 
+        class="bg-white border border-orange-100 rounded-2xl p-6 text-left shadow-lg transform transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
+        data-aos="fade-up" data-aos-delay="300">
+        <h3 class="text-xl font-semibold text-[#FF8626] mb-2">Kunjungi Situs UMKM</h3>
+        <p class="text-gray-700 mb-4">Cari UMKM favoritmu...</p>
+        <a href="#" class="inline-block px-5 py-2.5 bg-[#FF8626] text-white rounded-lg shadow hover:bg-[#e76e13] transition-all duration-300">Cari UMKM</a>
       </div>
     </div>
   </div>
 </section>
 
 
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,     // durasi animasi (ms)
+    once: false,       // true = hanya sekali animasi, false = tiap scroll animasi aktif
+    mirror: true       // true = animasi saat scroll naik juga
+  });
+</script>
 
 
 
@@ -169,71 +201,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Testimoni Section -->
-<section class="text-center py-20 bg-white" id="testimoni">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Apa Kata Mereka?</h2>
-    <p class="text-gray-600 max-w-xl mx-auto mb-12">
+<section class="relative py-24 bg-white" id="testimoni">
+  <!-- Background Bubbles -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute w-80 h-80 bg-[#FFF6ED] rounded-full opacity-50 blur-3xl top-0 left-1/3"></div>
+    <div class="absolute w-96 h-96 bg-[#FFEFDE] rounded-full opacity-40 blur-3xl bottom-0 right-1/4"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Apa Kata Mereka?</h2>
+    <p class="text-gray-600 text-lg max-w-xl mx-auto mb-12">
       Testimoni dari para pengguna kami yang telah merasakan manfaat Warungin dalam memperkuat dan mengembangkan usaha mereka.
     </p>
 
-    <!-- Testimoni Statistik -->
+    <!-- Statistik -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 mb-16">
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">15K+</h3>
-        <p class="text-gray-600 text-sm">Pengguna UMKM</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">75%</h3>
-        <p class="text-gray-600 text-sm">Tingkat Keberhasilan</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">35</h3>
-        <p class="text-gray-600 text-sm">Topik Permasalahan</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">26</h3>
-        <p class="text-gray-600 text-sm">Ahli Terkemuka</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">16</h3>
-        <p class="text-gray-600 text-sm">Tahun Pengalaman</p>
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold text-[#FF8626]">All-In-One</h3>
-        <p class="text-gray-600 text-sm">Solusi Digital</p>
-      </div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">15K+</h3><p class="text-gray-600 text-sm">Pengguna UMKM</p></div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">75%</h3><p class="text-gray-600 text-sm">Tingkat Keberhasilan</p></div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">35</h3><p class="text-gray-600 text-sm">Topik Permasalahan</p></div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">26</h3><p class="text-gray-600 text-sm">Ahli Terkemuka</p></div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">16</h3><p class="text-gray-600 text-sm">Tahun Pengalaman</p></div>
+      <div><h3 class="text-3xl font-bold text-[#FF8626]">All-In-One</h3><p class="text-gray-600 text-sm">Solusi Digital</p></div>
     </div>
 
-    <!-- Fitur Utama sebagai Alasan Kepercayaan -->
-    <h3 class="text-xl font-semibold text-gray-800 mb-8">Kenapa Mereka Memilih Warungin?</h3>
+    <!-- Kenapa Memilih -->
+    <h3 class="text-2xl font-semibold text-gray-800 mb-10">Kenapa Mereka Memilih Warungin?</h3>
     <div class="grid gap-6 md:grid-cols-3">
       <!-- Card 1 -->
-      <div class="bg-white rounded-xl shadow-lg p-6 text-left hover:shadow-xl transition">
-        <div class="bg-[#FFEFDE] w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl">📦</div>
+      <div class="bg-white rounded-2xl border border-orange-100 p-6 text-left shadow-lg hover:shadow-xl transition">
+        <div class="bg-[#FFEFDE] w-14 h-14 rounded-full flex items-center justify-center mb-4 text-2xl">📦</div>
         <h4 class="font-semibold text-lg mb-2 text-[#FF8626]">Transaksi Mudah & Customer UMKM</h4>
-        <p class="text-sm text-gray-600">
-          “Semenjak pakai Warungin, saya bisa kelola stok dan transaksi pelanggan secara efisien!” –<br><span class="italic">Bu Rina, Pemilik Toko Sembako</span>
-        </p>
+        <p class="text-sm text-gray-600">“Semenjak pakai Warungin, saya bisa kelola stok dan transaksi pelanggan secara efisien!”<br><span class="italic">– Bu Rina, Pemilik Toko Sembako</span></p>
       </div>
       <!-- Card 2 -->
-      <div class="bg-white rounded-xl shadow-lg p-6 text-left hover:shadow-xl transition">
-        <div class="bg-[#FFEFDE] w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl">📊</div>
+      <div class="bg-white rounded-2xl border border-orange-100 p-6 text-left shadow-lg hover:shadow-xl transition">
+        <div class="bg-[#FFEFDE] w-14 h-14 rounded-full flex items-center justify-center mb-4 text-2xl">📊</div>
         <h4 class="font-semibold text-lg mb-2 text-[#FF8626]">Analisis Performa Bisnis AI</h4>
-        <p class="text-sm text-gray-600">
-          “Fitur AI-nya membantu saya melihat grafik penjualan tiap minggu. Jadi tahu kapan harus stok ulang.” –<br><span class="italic">Pak Aris, Pemilik Warung Kopi</span>
-        </p>
+        <p class="text-sm text-gray-600">“Fitur AI-nya membantu saya melihat grafik penjualan tiap minggu. Jadi tahu kapan harus stok ulang.”<br><span class="italic">– Pak Aris, Pemilik Warung Kopi</span></p>
       </div>
       <!-- Card 3 -->
-      <div class="bg-white rounded-xl shadow-lg p-6 text-left hover:shadow-xl transition">
-        <div class="bg-[#FFEFDE] w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl">🛒</div>
+      <div class="bg-white rounded-2xl border border-orange-100 p-6 text-left shadow-lg hover:shadow-xl transition">
+        <div class="bg-[#FFEFDE] w-14 h-14 rounded-full flex items-center justify-center mb-4 text-2xl">🛒</div>
         <h4 class="font-semibold text-lg mb-2 text-[#FF8626]">Marketplace Generator</h4>
-        <p class="text-sm text-gray-600">
-          “Dulu saya bingung mau jualan online. Sekarang Warungin bantu saya punya toko sendiri di web!” –<br><span class="italic">Mbak Lita, UMKM Aksesoris</span>
-        </p>
+        <p class="text-sm text-gray-600">“Dulu saya bingung mau jualan online. Sekarang Warungin bantu saya punya toko sendiri di web!”<br><span class="italic">– Mbak Lita, UMKM Aksesoris</span></p>
       </div>
     </div>
   </div>
 </section>
+
 
 
 
