@@ -67,29 +67,29 @@
                                 <img src="{{ asset('assets/images/icons/Document.svg') }}" class="w-5 h-5 flex shrink-0" alt="icon">
                                 <input type="text" name="name" id=""
                                     class="appearance-none outline-none w-full font-regular placeholder:text-ngekos-grey placeholder:font-light"
-                                    placeholder="Enter your name..." required>
+                                    placeholder="Masukkan Nama Anda..." required>
                             </label>
                         </div>
 
                         <div class="flex flex-col w-full gap-2">
-                            <p class="font-semibold">Phone Number</p>
+                            <p class="font-semibold">Nomor Telepon</p>
                             <label
                                 class="flex items-center w-full rounded-[8px] p-[14px_20px] gap-3 bg-white ring-1 ring-[#F3AF003D] ring-opacity-5 focus-within:ring-[#F3AF00] focus-within:ring-opacity-100 transition-all duration-300">
                                 <img src="{{ asset ('assets/images/icons/Call.svg') }}" class="w-5 h-5 flex shrink-0" alt="icon">
                                 <input type="text" name="phone_number" id=""
                                     class="appearance-none outline-none w-full font-regular placeholder:text-ngekos-grey placeholder:font-light"
-                                    placeholder="Enter your phone number..." required>
+                                    placeholder="Masukkan Nomor Telepon..." required>
                             </label>
                         </div>
 
                         <div class="flex flex-col w-full gap-2">
-                            <p class="font-semibold">Table Number</p>
+                            <p class="font-semibold">Detail Alamat</p>
                             <label
                                 class="flex items-center w-full rounded-[8px] p-[14px_20px] gap-3 bg-white ring-1 ring-[#F3AF003D] ring-opacity-5 focus-within:ring-[#F3AF00] focus-within:ring-opacity-100 transition-all duration-300">
                                 <img src="{{ asset('assets/images/icons/Document.svg') }}" class="w-5 h-5 flex shrink-0" alt="icon">
                                 <input type="text" name="table_number" id=""
                                     class="appearance-none outline-none w-full font-regular placeholder:text-ngekos-grey placeholder:font-light"
-                                    placeholder="Enter your table number...." required>
+                                    placeholder="Masukkan Detail Alamat anda...." required>
                             </label>
                         </div>
                     </div>
@@ -141,4 +141,5 @@
 
 @section('script')
     <script src="{{ asset('assets/js/customer-information.js') }}"></script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.clientkey') }}"></script>
 @endsection

@@ -16,6 +16,7 @@ class Transaction extends Model
         'phone_number',
         'table_number',
         'payment_method',
+        'payment_token',
         'total_price',
         'status',
     ];

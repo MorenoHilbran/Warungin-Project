@@ -62,51 +62,51 @@
             </div>
 
             <div class="swiper w-full">
-                <div class="swiper-wrapper mt-[10px]">
+                <div class="mt-[10px] overflow-x-auto">
+                <div class="flex gap-4 w-max">
                     @foreach ($populars as $popular)
-                    <div class="swiper-slide !w-fit">
-                        <a href="{{ route('product.show', ['username'=>$store->username, 'id'=> $popular->id]) }}" class="card">
-                            <div
-                                class="flex flex-col w-[210px] shrink-0 rounded-[8px] bg-white p-[12px] pb-5 gap-[10px] hover:bg-[#FFF7F0] hover:border-[1px] hover:border-[#F3AF00] transition-all duration-300 cursor-pointer">
-                                <div
-                                    class="position-relative flex w-full h-[150px] shrink-0 rounded-[8px] bg-[#D9D9D9] overflow-hidden">
-                                    <img src="{{ asset('storage/' . $popular->image) }}" class="w-full h-full object-cover"
-                                        alt="thumbnail">
+                    <div class="shrink-0">
+                    <a href="{{ route('product.show', ['username' => $store->username, 'id' => $popular->id]) }}" class="card">
+                        <div
+                        class="flex flex-col w-[210px] rounded-[8px] bg-white p-[12px] pb-5 gap-[10px] hover:bg-[#FFF7F0] hover:border-[1px] hover:border-[#F3AF00] transition-all duration-300 cursor-pointer">
+                        
+                        <div class="relative flex w-full h-[150px] rounded-[8px] bg-[#D9D9D9] overflow-hidden">
+                            <img src="{{ asset('storage/' . $popular->image) }}" class="w-full h-full object-cover" alt="thumbnail">
 
-                                    <!-- rating -->
-                                    <div
-                                        class="absolute top-5 right-5 flex items-center gap-1 bg-white px-[8px] py-[4px] rounded-full">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <p class="text-sm">{{ $popular->rating }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-[#F3AF00] font-[400] text-[12px]">
-                                        {{  $popular->productCategory->name }}
-                                    </p>
-                                    <h3 class="text-[#353535] font-[500] text-[14px]">
-                                        {{ $popular->name }}
-                                    </h3>
-                                    <p class="text-[#606060] font-[400] text-[10px]">
-                                        {{ $popular->description }}
-                                    </p>
-
-                                </div>
-
-                                <div class="flex items-center justify-between ">
-                                    <p class="text-[#FF001A] font-[600] text-[14px]">
-                                       Rp {{ number_format($popular->price) }}
-                                    </p>
-                                    <button type="button"
-                                        class="flex items-center justify-center w-[24px] h-[24px] rounded-full bg-transparent"
-                                        data-id="{{ $popular->id }}" onclick="addToCart(this.dataset.id)">
-                                        <img src="assets/images/icons/ic_plus.svg" class="w-full h-full" alt="icon">
-                                    </button>
-                                </div>
+                            <!-- rating -->
+                            <div class="absolute top-5 right-5 flex items-center gap-1 bg-white px-[8px] py-[4px] rounded-full">
+                            <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
+                            <p class="text-sm">{{ $popular->rating }}</p>
                             </div>
-                        </a>
-                        @endforeach
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <p class="text-[#F3AF00] font-[400] text-[12px]">
+                            {{ $popular->productCategory->name }}
+                            </p>
+                            <h3 class="text-[#353535] font-[500] text-[14px]">
+                            {{ $popular->name }}
+                            </h3>
+                            <p class="text-[#606060] font-[400] text-[10px]">
+                            {{ $popular->description }}
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <p class="text-[#FF001A] font-[600] text-[14px]">
+                            Rp {{ number_format($popular->price) }}
+                            </p>
+                            <button type="button"
+                            class="flex items-center justify-center w-[24px] h-[24px] rounded-full bg-transparent"
+                            data-id="{{ $popular->id }}" onclick="addToCart(this.dataset.id)">
+                            <img src="assets/images/icons/ic_plus.svg" class="w-full h-full" alt="icon">
+                            </button>
+                        </div>
+                        </div>
+                    </a>
                     </div>
+                    @endforeach
+                </div>
                 </div>
             </div>
         </div>
